@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ML_LAB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+</head>
+<body>
+<div class="card-holder">
+  <div class="card bg-aurora">
+      <div class="fadeInUp">
+          Welcome To ML LAB Experiments Page.
+          <div class="new-line">
+          <button class="btn" onclick="scrolldiv('main')"><span>Get Start </span></button>
+          </div>
+      </div>
+      <p class="intro">Designed by <span>Sameer Shaik</span></p>
+  </div>
+</div>
+<hr>
+<div class="card-holder" id="main">
+  <div class="card bg2-aurora" style="vertical-align:top;">
+      <div class="container">
+          <form action="{{ url_for('UpdateDateSet') }}" enctype="multipart/form-data" method="post">
+              <p>Upload dataset</p>
+              <div class="row">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" name="file" required>
+                    {% if not filename %}
+                    <label class="custom-file-label" for="customFile">Choose Dataset</label>
+                  {% else %}
+                  <label class="custom-file-label" for="customFile">{{ filename }}</label>
+              {% endif %}
+                </div>
+              </div><br>
+              <input  type="submit" class="btn btn-primary col-sm-6" value="Upload"/>
+  </form>
+</div>
+      <br>
+  {% if tables %}
+      <div class="container-out">
+          {% for table in tables %}
+            {{ table|safe }}
+            {% endfor %}
+      </div>
+      <hr>
+
+<div class="container">
+          <form action="{{ url_for('getresult') }}" method="post" id="algo">
+              <p>Choose Algorithm <sub>(select multiple for compare)</sub></p>
+              <input type="hidden" name="dataset" value="{{ tables }}">
+              <input type="hidden" name="filename" value="{{ filename }}">
+              <div class="row">
+                <div class="custom-control custom-checkbox mb-3">
+                    <div class="row ml-3">
+                        <div class="col m-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1" value="FIND-S algorithm" name="1">
+                            <label class="custom-control-label" for="customCheck1">FIND-S algorithm</label></div>
+                        <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" value="Candidate-Elimination algorithm" name="2">
+                        <label class="custom-control-label" for="customCheck2">Candidate-Elimination algorithm</label>
+                            </div>
+                         <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck3" value="ID3 algorithm" name="3">
+                        <label class="custom-control-label" for="customCheck3">ID3 algorithm</label>
+                            </div>
+                         <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck4" value="Backpropagation algorithm" name="4">
+                        <label class="custom-control-label" for="customCheck4">Backpropagation algorithm</label>
+                            </div>
+                         <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck5" value="Gaussian Naive Bayesian" name="5">
+                        <label class="custom-control-label" for="customCheck5">Gaussian Naive Bayesian</label>
+                            </div>
+                        <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck6" value="Multinomial Naive Bayesian" name="6">
+                        <label class="custom-control-label" for="customCheck6">Multinomial Naive Bayesian</label>
+                            </div>
+                         <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck7" value="Bernoulli Naive Bayesian" name="7">
+                        <label class="custom-control-label" for="customCheck7">Bernoulli Naive Bayesian</label>
+                            </div>
+                        <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck8" value="Bayesian network" name="8">
+                        <label class="custom-control-label" for="customCheck8">Bayesian network</label>
+                            </div>
+                        <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck9" value="Gaussian Mixture Model(EM Algo)" name="9">
+                        <label class="custom-control-label" for="customCheck9">Gaussian Mixture Model(EM Algo)</label>
+                            </div>
+                        <div class="col m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck10" value="K-Means Algorithm" name="10">
+                        <label class="custom-control-label" for="customCheck10">K-Means Algorithm</label>
+                            </div>
+                        </div>
+                </div><br></div>
+              <hr>
+                  <button type="submit" class="btn btn-primary col-sm-6">Show Results</button>
+  </form>
+</div>
+  {% endif %}
+  {% if result %}
+      <div class="mul-out">
+      {%  for dict1 in result %}
+      <div class="child-out">
+          {% for i,j in dict1.items()%}
+              {% if i=='path' %}
+              <img src="../{{ j }}">
+              {% else %}
+            <strong>{{ i }}</strong><br>
+            <p>{{ j }}</p>
+              {% endif %}
+          {% endfor %}
+      </div>
+      {% endfor %}
+      </div>
+  {% endif %}
+
+  </div>
+</div>
+<script>
+    {% if filename %}
+    scrolldiv('main');
+    {% endif %}
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+function scrolldiv(a) {
+                window.scroll(0,
+         findPosition(document.getElementById(a))-10);
+            }
+            function findPosition(obj) {
+                var currenttop = 0;
+                if (obj.offsetParent) {
+                    do {
+                        currenttop += obj.offsetTop;
+                    } while ((obj = obj.offsetParent));
+                    return [currenttop];
+                }
+            }
+    function UploadCsv() {
+        var csv = document.getElementById('customFile').files[0];
+        var data=new FormData();
+        data.append('file',csv)
+        console.log(csv)
+        data.append('sasas','assasa')
+        var url='/UpdateDateSet/';
+
+                fetch(url,{
+                    method:'GET',
+                    headers: {
+                    "Content-type": "multipart/form-data"
+                },
+                body: data
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data)
+                });
+    }
+</script>
+</body>
+</html>

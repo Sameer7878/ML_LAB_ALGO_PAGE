@@ -1,0 +1,134 @@
+html{
+    scroll-behavior: smooth;
+}
+.card-holder {
+  margin: 0.2em 0;
+}
+
+.card {
+  font-family: -apple-system, BlinkMacSystemFont, 'Open Sans', sans-serif;
+  font-size: 3em;
+  font-weight: 800;
+  width: 64em;
+ height: 20em;
+    vertical-align:middle;
+  border-radius: 0.25em;
+  display: table-cell;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.mul-out{
+    color: black;
+    display: flex;
+    flex-wrap: wrap;
+}
+.child-out{
+    width: calc(50% - 1px);
+    margin: 10px 1px 0 0;
+    height: 100%;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    border:solid black 2px;
+}
+
+.bg-aurora {
+    color: #fff;
+    background: linear-gradient(0deg, #fa7c30 20%, rgba(1, 1, 1, 1) 20%);
+    text-align: center;
+
+}
+.dataframe{
+    width: 100%;
+    font-family: "Times New Roman";
+    font-size: 30px;
+}
+table th{
+    font-weight: bold;
+    color: #fa7c30;
+}
+table td{
+    font-weight: lighter;
+}
+.bg2-aurora {
+    height: 30em;
+    color: #fff;
+    background: linear-gradient(0deg, rgb(66, 66, 66) 10%,#fa7c30 10%);
+
+}
+.bg2-aurora .container{
+    margin-top: 50px;
+    font-size: 20px;
+    text-align: center;
+}
+.bg2-aurora .container .btn{
+    font-size: 15px;
+    padding:10px;
+}
+
+.bg2-aurora .container-out{
+    background-color: #FFFFFF;
+    color: black;
+    margin: auto;
+    width: 60%;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 10px;
+    text-align: center;
+}
+.fadeInUp{animation:fadeInUp 2s ease backwards;}
+@keyframes fadeInUp{
+  0%{transform:translate(0px, 100px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+.btn {
+  border-radius: 10px;
+  background-color: dodgerblue;
+  border: none;
+  color: #FFFFFF;
+    font-size: 20px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.new-line::before{
+    content: '\a';
+    white-space: pre;
+}
+
+.intro{
+    padding-left: 20px;
+    position: absolute;
+        font-size: 20px;
+       text-align: left;
+       bottom: 0;
+   }
+.btn span {
+  cursor: pointer;
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.btn:hover span {
+    color: #FFFFFF;
+  padding-right: 30px;
+}
+
+.btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+@media only screen and (max-width: 768px) {
+    .child-out {
+        width: calc(90% - 1px);
+    }
+    
+}
