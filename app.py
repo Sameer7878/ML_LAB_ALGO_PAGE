@@ -1,12 +1,11 @@
 import ast
-
 from flask import *
 import os
 import pandas as pd
 from models.ml_algos import ML_ALGOS
 app=Flask(__name__)
 
-UPLOAD_FOLDER='/Users/sameershaik/ML_LAB_PAGE/static/datasets'
+UPLOAD_FOLDER='static/datasets'
 dataset=None
 def load_csv(path):
     global dataset
