@@ -3,7 +3,11 @@ from flask import *
 import os
 import pandas as pd
 from models.ml_algos import ML_ALGOS
+from flask_cors import CORS
 app=Flask(__name__)
+cors = CORS(app)
+from flask_restful import Resource
+import pandas as pd
 
 UPLOAD_FOLDER='static/datasets'
 dataset=None
@@ -80,6 +84,13 @@ def getresult():
         return render_template('index.html',tables=data,filename=filename,result=result)
     else:
         return abort(500)
+@app.route('/getcsvFile/',methods=['POST'])
+def getcsvFile():
+    if request.method=='POST':
+        file =request.data
+        data = pd.read_csv(file)
+        print('sucess')
+    return data
 
 
 
