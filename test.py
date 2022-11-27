@@ -8,7 +8,7 @@ import logging
 
 
 UPLOAD_FOLDER = 'static/datasets'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','csv'])
+ALLOWED_EXTENSIONS = ['csv']
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -23,7 +23,6 @@ def fileUpload():
     filename = secure_filename(file.filename)
     destination="/".join([target, filename])
     file.save(destination)
-    session['uploadFilePath']=destination
     response="Whatever you wish too return"
     return response
 

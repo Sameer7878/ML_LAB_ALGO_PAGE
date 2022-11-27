@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ReactFileReader from 'react-file-reader';
 import { CsvToHtmlTable } from 'react-csv-to-table';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 const Datadisplay=()=>{
     const [csv,setcsv]=useState('')
+    console.log(csv)
     const [file,setfile]=useState()
     const handleFiles = files => {
         var reader = new FileReader();
@@ -14,17 +15,27 @@ const Datadisplay=()=>{
         }
       reader.readAsText(files[0]);
    }
-   axios.post('http://127.0.0.1:5000/UpdateDateSet',{
-    headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': '*',
-    'Access-Control-Allow-Credentials': 'true'}},file)
-    .then(function (response) {
-    console.log(response);
+useEffect(()=>{
+  console.log(csv)
+  var data = new FormData();
+  data.append('file', csv.csv);
+
+var config = {
+  method: 'post',
+  url: 'http://localhost:5000/upload',
+  headers: {  'Content-Type': 'multipart/form-data' },
+  data : data
+};
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
   })
   .catch(function (error) {
     console.log(error);
   });
-   
+},[csv])
+
+
     return <div className="container">
           <div style={{
         display: 'flex',

@@ -1,8 +1,8 @@
-// import Datadisplay from "./Datadisplay";
+import Datadisplay from "./Datadisplay";
 import React from "react";
-import Form from "./form";
-import Main from "./Main";
+// import Form from "./form";
+// import Main from "./Main";
 const App =()=>{
-  return <div><Form/></div>
+  return <div><Datadisplay/></div>
 }
 export default App;
