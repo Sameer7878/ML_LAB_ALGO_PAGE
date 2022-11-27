@@ -1,7 +1,4 @@
-"""ALL PYTHON MECHINE LEARNING ALGORITHMS
-  created by @sameer shaik(19KB1A1244)
-  NBKRIST
- """
+
 import random
 
 import numpy as np
