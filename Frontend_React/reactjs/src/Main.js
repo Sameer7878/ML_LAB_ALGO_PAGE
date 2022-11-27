@@ -15,8 +15,7 @@ class Main extends React.Component {
     ev.preventDefault();
 
     const data = new FormData();
-    data.append('file', this.uploadInput.files[0]);
-    data.append('filename', this.fileName.value);
+    data.append('file',uploadInput.files[0]);
     console.log(data)
     fetch('http://localhost:5000/upload', {
       method: 'POST',
@@ -32,7 +31,7 @@ class Main extends React.Component {
     return (
       <form onSubmit={this.handleUploadImage}>
         <div>
-          <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
+          <input type="file" />
         </div>
         <div>
           <input ref={(ref) => { this.fileName = ref; }} type="text" placeholder="Enter the desired name of file" />
