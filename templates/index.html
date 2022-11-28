@@ -105,15 +105,16 @@
 </div>
   {% endif %}
   {% if result %}
-      <div class="mul-out">
-      {%  for dict1 in result %}
+      <div class="mul-out" id="result">
+      {%  for dict1,title in zip(result.values(),do_algov.values()) %}
       <div class="child-out">
+      <h4>{{ title }}</h4>
           {% for i,j in dict1.items()%}
               {% if i=='path' %}
               <img src="../{{ j }}">
               {% else %}
             <strong>{{ i }}</strong><br>
-            <p>{{ j }}</p>
+            <p>{{ j | safe}}</p>
               {% endif %}
           {% endfor %}
       </div>
@@ -127,12 +128,22 @@
     {% if filename %}
     scrolldiv('main');
     {% endif %}
+    {% if result %}
+    scrolldiv('result');
+    {% endif %}
 // Add the following code if you want the name of the file appear on select
 $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
-
+    {% if do_algov %}
+        var li={{ do_algov.keys() | list }};
+        for(i=0;i<li.length;i++) {
+            var idname = 'customCheck' + li[i];
+            console.log(idname)
+            document.getElementById(idname).checked = true;
+        }
+    {% endif %}
 function scrolldiv(a) {
                 window.scroll(0,
          findPosition(document.getElementById(a))-10);

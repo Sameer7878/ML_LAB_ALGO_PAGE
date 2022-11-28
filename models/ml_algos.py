@@ -41,14 +41,14 @@ class ML_ALGOS:
     def CANDIDATE_ALGO(self): #candidate elimination algo
         res={}
         concepts=np.array(self.data.iloc [:, 0:-1])
-        res['concepts']=concepts
+        res['concepts']=concepts.tolist()
         target=np.array(self.data.iloc [:, -1])
-        res['target']=target
+        res['target']=target.tolist()
 
         def learn(concepts, target):
             specific_h=concepts [0].copy()
             general_h=[["?" for i in range(len(specific_h))] for i in range(len(specific_h))]
-            res ["initialization of specific_h and general_h"]=[specific_h,general_h]
+            res ["initialization of specific_h and general_h"]=[specific_h.tolist(),general_h]
 
             for i, h in enumerate(concepts):
                 #print("For Loop Starts")
@@ -67,7 +67,7 @@ class ML_ALGOS:
                         else:
                             general_h [x] [x]='?'
 
-                res["steps of Candidate Elimination Algorithm"]= [i+1,specific_h,general_h]
+                res["steps of Candidate Elimination Algorithm"]= [i+1,specific_h.tolist(),general_h]
 
             indices=[i for i, val in enumerate(general_h) if val == ['?', '?', '?', '?', '?', '?']]
             for i in indices:
@@ -75,7 +75,7 @@ class ML_ALGOS:
             return specific_h, general_h
 
         s_final, g_final=learn(concepts, target)
-        res["Final Specific_h:"]=s_final
+        res["Final Specific_h:"]=s_final.tolist()
         res["Final General_h:"]=g_final
         return res
     def BackPropagation(self):
@@ -135,9 +135,9 @@ class ML_ALGOS:
             wout+=hlayer_act.T.dot(d_output) * lr
             wh+=X.T.dot(d_hiddenlayer) * lr
 
-        res["Input: "]=X
+        res["Input: "]=X.tolist()
         res["Actual Output: "]=y
-        res["Predicted Output: "]=output
+        res["Predicted Output: "]=output.tolist()
         return res
 
     def PreProcessing(self):
@@ -150,15 +150,15 @@ class ML_ALGOS:
         clf=DecisionTreeClassifier(random_state=0)
         x=self.data [self.data.columns.values [:-1]].values
         y=self.data [self.data.columns.values [-1]].values
-        x_train, x_test, y_train, y_test=train_test_split(x, y, test_size=0.3)
+        x_train, x_test, y_train, y_test=train_test_split(x, y, test_size=0.2)
         clf.fit(x_train, y_train)
-        fig, axes=plt.subplots(nrows=1, ncols=1, figsize=(4, 4), dpi=300)
+        fig, axes=plt.subplots(nrows=1, ncols=1, figsize=(4,4), dpi=1000)
         y_pred=clf.predict(x_test)
         tree.plot_tree(clf,
                        feature_names=self.data.columns.values [:-1],
                        class_names=self.data.columns.values [-1],
                        filled=True)
-        res['Confusion matrix']=metrics.confusion_matrix(y_test,y_pred)
+        res['Confusion matrix']=metrics.confusion_matrix(y_test,y_pred).tolist()
         res['Accuracy of the classifier is']=metrics.accuracy_score(y_test,y_pred)
         fig.savefig('static/img/DTP.png')
         res['path']='static/img/DTP.png'
@@ -179,7 +179,7 @@ class ML_ALGOS:
         clf=GaussianNB().fit(xtrain, ytrain.ravel())
         predicted=clf.predict(xtest)
         # printing Confusion matrix, accuracy, Precision and Recall
-        res['Confusion matrix']=metrics.confusion_matrix(ytest, predicted)
+        res['Confusion matrix']=metrics.confusion_matrix(ytest, predicted).tolist()
         res['Accuracy of the classifier is']= metrics.accuracy_score(ytest, predicted)
 
         res['The value of Precision']=metrics.precision_score(ytest, predicted)
@@ -201,7 +201,7 @@ class ML_ALGOS:
         clf=MultinomialNB().fit(xtrain, ytrain.ravel())
         predicted=clf.predict(xtest)
         # printing Confusion matrix, accuracy, Precision and Recall
-        res ['Confusion matrix']=metrics.confusion_matrix(ytest, predicted)
+        res ['Confusion matrix']=metrics.confusion_matrix(ytest, predicted).tolist()
         res ['Accuracy of the classifier is']=metrics.accuracy_score(ytest, predicted)
 
         res ['The value of Precision']=metrics.precision_score(ytest, predicted)
@@ -223,7 +223,7 @@ class ML_ALGOS:
         clf=BernoulliNB().fit(xtrain, ytrain.ravel())
         predicted=clf.predict(xtest)
         # printing Confusion matrix, accuracy, Precision and Recall
-        res ['Confusion matrix']=metrics.confusion_matrix(ytest, predicted)
+        res ['Confusion matrix']=metrics.confusion_matrix(ytest, predicted).tolist()
         res ['Accuracy of the classifier is']=metrics.accuracy_score(ytest, predicted)
 
         res ['The value of Precision']=metrics.precision_score(ytest, predicted)
@@ -235,9 +235,9 @@ class ML_ALGOS:
         res={}
         dataset=self.data
         dataset=dataset.replace('?', np.nan)
-        res['Sample instances from the dataset are given below']=dataset.head()
+        #res['Sample instances from the dataset are given below']=dataset.head()
 
-        res['Attributes and datatypes']=dataset.dtypes
+        res['Attributes and datatypes']=dataset.dtypes.tolist()
         train_li=[(x,self.data.columns.values [-1]) for x in self.data.columns.values [:-1] ]
         model=BayesianNetwork(train_li)
         res['Learning CPD using Maximum likelihood estimators']=''
@@ -245,15 +245,17 @@ class ML_ALGOS:
 
         res['Inferencing with Bayesian Network:']=''
         HeartDiseasetest_infer=VariableElimination(model)
+        '''print(HeartDiseasetest_infer)
         li=list(self.data.columns.values [:-1])
         a=random.choice(li)
         li.remove(a)
         b=random.choice(li)
-        q1=HeartDiseasetest_infer.query(variables=[self.data.columns.values [-1]], evidence={a: 1})
-        res [f'1. Probability of {self.data.columns.values [-1]} given evidence= {a}']=q1
+        print(a,b,self.data.columns.get_loc(a),self.data.columns.get_loc(b))'''
+        q1=HeartDiseasetest_infer.query(variables=[self.data.columns.values [-1]], evidence={self.data.columns[0]: 1})
+        res [f'1. Probability of {self.data.columns.values [-1]} given evidence= {self.data.columns[1]}']=str(q1).replace('\n','<br>')
 
-        q2=HeartDiseasetest_infer.query(variables=[self.data.columns.values [-1]], evidence={b: 2})
-        res [f'2. Probability of {self.data.columns.values [-1]} given evidence= {b}']=q2
+        q2=HeartDiseasetest_infer.query(variables=[self.data.columns.values [-1]], evidence={self.data.columns[1]: 2})
+        res [f'2. Probability of {self.data.columns.values [-1]} given evidence= {self.data.columns[2]}']=str(q2).replace('\n','<br>')
         return res
     def EM_GMM(self):
         self.PreProcessing()
@@ -276,7 +278,7 @@ class ML_ALGOS:
         # y_cluster_gmm
 
         res['The accuracy score of EM: ']=metrics.accuracy_score(y, y_gmm)
-        res['The Confusion matrix of EM: ']=metrics.confusion_matrix(y, y_gmm)
+        res['The Confusion matrix of EM: ']=metrics.confusion_matrix(y, y_gmm).tolist()
         return res
     def K_Means(self):
         self.PreProcessing()
@@ -312,6 +314,6 @@ class ML_ALGOS:
         plt.ylabel('Petal Width')
         plt.show()"""
         res['The accuracy score of K-Mean: ']= metrics.accuracy_score(y, model.labels_)
-        res['The Confusion matrixof K-Mean: ']= metrics.confusion_matrix(y, model.labels_)
+        res['The Confusion matrixof K-Mean: ']= metrics.confusion_matrix(y, model.labels_).tolist()
         return res
 
