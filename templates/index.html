@@ -103,8 +103,12 @@
                   <button type="submit" class="btn btn-primary col-sm-6">Show Results</button>
   </form>
 </div>
+
   {% endif %}
   {% if result %}
+      <div class="best_algo" style="text-align:center;">
+              <h4>Best Algo Among Selected Algos: <span style="font-weight:bold;">{{best_algo}}</span></h4>
+          </div>
       <div class="mul-out" id="result">
       {%  for dict1,title in zip(result.values(),do_algov.values()) %}
       <div class="child-out">

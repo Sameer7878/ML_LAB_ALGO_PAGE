@@ -1,6 +1,5 @@
 import ast
 import json
-
 from flask import *
 import os
 import pandas as pd
@@ -20,7 +19,7 @@ def load_csv(path):
     global dataset
     dataset=pd.read_csv(path)
     return [dataset.to_html(classes='data table-responsive', header="true")]
-def getoutput(do_list,filename):
+def getoutput(do_list,filename,do_algo):
     dataset=pd.read_csv('static/datasets/{0}'.format(filename))
     algo_obj=ML_ALGOS(dataset)
     result_list={}
@@ -59,8 +58,13 @@ def getoutput(do_list,filename):
             continue
         else:
             pass
+    c=[0,0]
+    for i,j in result_list.items():
+        if 'Accuracy of the classifier is' in j:
+            if j['Accuracy of the classifier is']>=c[1]:
+                c[0],c[1]= i,j['Accuracy of the classifier is']
 
-    return result_list
+    return result_list,do_algo[c[0]]
 
 
 @app.route('/')
@@ -86,9 +90,9 @@ def getresult():
         for i in range(1,11):
             if request.form.get(str(i)):
                 do_algo[i]=request.form[str(i)]
-        result=getoutput(do_algo,filename)
+        result,best_algo=getoutput(do_algo,filename,do_algo)
         print(result)
-        return render_template('index.html',tables=data,filename=filename,result=result,do_algov=do_algo)
+        return render_template('index.html',tables=data,filename=filename,result=result,do_algov=do_algo,best_algo=best_algo)
     else:
         return abort(500)
 '''#@app.route('/getcsvFile/',methods=['POST'])
