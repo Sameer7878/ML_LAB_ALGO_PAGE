@@ -4,7 +4,47 @@ html{
 .card-holder {
   margin: 0.2em 0;
 }
-
+ol.boxs-container{
+    list-style: none;
+    padding:20px;
+}
+ol.boxs-container li{
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+ol.boxs-container li label{
+    display: inline-block;
+    background-color: #e5f2fa;
+    border:2px solid #abdff1;
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: medium;
+}
+ol.boxs-container li label:hover{
+    border:3px solid #65a7f8;
+}
+ol.boxs-container li input[type='checkbox']:checked+label{
+    border:1px solid #65a7f8;
+    background-color: #65a7f8;
+    transition:all .2s;
+}
+ol.boxs-container li input[type='checkbox']{
+    display:absolute;
+}
+ol.boxs-container li input[type='checkbox']{
+    position: absolute;
+    opacity: 0;
+}
 .card {
   font-family: -apple-system, BlinkMacSystemFont, 'Open Sans', sans-serif;
   font-size: 3em;
@@ -21,13 +61,12 @@ html{
     margin-bottom:50px ;
     max-height: 100%;
     max-width: 100%;
-    color: black;
     display: flex;
     flex-wrap: wrap;
 }
 .child-out{
     font-family: "Lucinda Grande", "Lucinda Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-    font-size: 18px;
+    font-size: small;
     padding: 20px;
     width: calc(50% - 1px);
     margin: 10px 1px 0 0;
@@ -37,11 +76,12 @@ html{
     border:solid black 2px;
 }
 .child-out p{
-    font-weight: 400;
+    font-size: small;
 }
-.child-out h4{
+.child-out h5{
     text-align: center;
     text-decoration: underline;
+
 }
 
 .child-out img{
@@ -49,27 +89,48 @@ html{
     height: 100%;
 }
 .bg-aurora {
-    color: #fff;
-    background: linear-gradient(0deg, #fa7c30 20%, rgba(1, 1, 1, 1) 20%);
+    background: linear-gradient(0deg, #e5f2fa 20%, #c0e5ff 20%);
     text-align: center;
 
 }
 .dataframe{
-    width: 100%;
-    font-family: "Times New Roman";
-    font-size: 30px;
+    font-family:serif;
+}
+.container-in{
+    margin: auto;
+    width: 40%;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 10px;
+    text-align: center;
+}
+table{
+    margin: 0 auto;
+    height: 150px;
+    width:100%;
+    position: relative;
+    justify-content: space-around;
+  display: inline-block;
+    align-content: space-around;
 }
 table th{
     font-weight: bold;
-    color: #fa7c30;
+    color: #153b52;
+    text-align: center;
+    font-size: medium;
+    background-color: #abdff1;
 }
 table td{
     font-weight: lighter;
+    text-align: center;
+    font-size: medium;
+}
+tr:nth-child(even) {
+    background-color: white;
 }
 .bg2-aurora {
-    height: 30em;
-    color: #fff;
-    background: #fa7c30;
+    height: 20em;
+    background: #e5f2fa;
 
 }
 .bg2-aurora .container{
@@ -92,14 +153,14 @@ table td{
     font-size: 10px;
     text-align: center;
 }
-.fadeInUp{animation:fadeInUp 2s ease backwards;}
+.fadeInUp{animation:fadeInUp 2.5s ease backwards;}
 @keyframes fadeInUp{
   0%{transform:translate(0px, 100px); opacity: 0;}
   100%{transform:translate(0px, 0); opacity: 1;}
 }
 .btn {
   border-radius: 10px;
-  background-color: dodgerblue;
+  background-color: #2187ff;
   border: none;
   color: #FFFFFF;
     font-size: 20px;
@@ -135,7 +196,7 @@ table td{
 }
 
 .btn:hover span {
-    color: #FFFFFF;
+
   padding-right: 30px;
 }
 

@@ -1,11 +1,10 @@
 import ast
-import json
-from flask import *
 import os
-import pandas as pd
-from models.ml_algos import ML_ALGOS
+
+from flask import *
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
+
+from models.ml_algos import ML_ALGOS
 
 app=Flask(__name__)
 app.jinja_env.globals.update(zip=zip)
@@ -63,8 +62,7 @@ def getoutput(do_list,filename,do_algo):
         if 'Accuracy of the classifier is' in j:
             if j['Accuracy of the classifier is']>=c[1]:
                 c[0],c[1]= i,j['Accuracy of the classifier is']
-
-    return result_list,do_algo[c[0]]
+    return result_list,c[0]
 
 
 @app.route('/')

@@ -37,70 +37,40 @@
               {% endif %}
                 </div>
               </div><br>
-              <input  type="submit" class="btn btn-primary col-sm-6" value="Upload"/>
+             <input type="submit" class="btn btn-primary col-sm-6" value="Upload"/>
   </form>
 </div>
       <br>
   {% if tables %}
-      <div class="container-out">
+      <!--button class="btn btn-primary col-sm-3" onclick="scrolldiv('algo')">choose algo</button-->
+      <div class="container-in">
           {% for table in tables %}
             {{ table|safe }}
             {% endfor %}
       </div>
       <hr>
-
 <div class="container">
-          <form action="{{ url_for('getresult') }}" method="post" id="algo">
-              <p>Choose Algorithm <sub>(select multiple for compare)</sub></p>
-              <input type="hidden" name="dataset" value="{{ tables }}">
-              <input type="hidden" name="filename" value="{{ filename }}">
-              <div class="row">
-                <div class="custom-control custom-checkbox mb-3">
-                    <div class="row ml-3">
-                        <div class="col m-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" value="FIND-S algorithm" name="1">
-                            <label class="custom-control-label" for="customCheck1">FIND-S algorithm</label></div>
-                        <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck2" value="Candidate-Elimination algorithm" name="2">
-                        <label class="custom-control-label" for="customCheck2">Candidate-Elimination algorithm</label>
-                            </div>
-                         <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck3" value="ID3 algorithm" name="3">
-                        <label class="custom-control-label" for="customCheck3">ID3 algorithm</label>
-                            </div>
-                         <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck4" value="Backpropagation algorithm" name="4">
-                        <label class="custom-control-label" for="customCheck4">Backpropagation algorithm</label>
-                            </div>
-                         <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck5" value="Gaussian Naive Bayesian" name="5">
-                        <label class="custom-control-label" for="customCheck5">Gaussian Naive Bayesian</label>
-                            </div>
-                        <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck6" value="Multinomial Naive Bayesian" name="6">
-                        <label class="custom-control-label" for="customCheck6">Multinomial Naive Bayesian</label>
-                            </div>
-                         <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck7" value="Bernoulli Naive Bayesian" name="7">
-                        <label class="custom-control-label" for="customCheck7">Bernoulli Naive Bayesian</label>
-                            </div>
-                        <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck8" value="Bayesian network" name="8">
-                        <label class="custom-control-label" for="customCheck8">Bayesian network</label>
-                            </div>
-                        <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck9" value="Gaussian Mixture Model(EM Algo)" name="9">
-                        <label class="custom-control-label" for="customCheck9">Gaussian Mixture Model(EM Algo)</label>
-                            </div>
-                        <div class="col m-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck10" value="K-Means Algorithm" name="10">
-                        <label class="custom-control-label" for="customCheck10">K-Means Algorithm</label>
-                            </div>
-                        </div>
-                </div><br></div>
-              <hr>
-                  <button type="submit" class="btn btn-primary col-sm-6">Show Results</button>
-  </form>
+    <form action="{{ url_for('getresult') }}" method="post" id="algo">
+        <p>Choose Algorithm <sub>(select multiple for compare)</sub></p>
+        <input type="hidden" name="dataset" value="{{ tables }}">
+        <input type="hidden" name="filename" value="{{ filename }}">
+        <div class="row">
+        <ol class="boxs-container">
+            <li><input type="checkbox" class="custom-control-input" id="customCheck1" value="FIND-S algorithm" name="1"><label for="customCheck1">FIND-S algorithm</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck2" value="Candidate-Elimination algorithm" name="2"><label for="customCheck2">Candidate-Elimination algorithm</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck3" value="ID3 algorithm" name="3"><label for="customCheck3">ID3 algorithm</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck4" value="Backpropagation algorithm" name="4"><label for="customCheck4">Backpropagation algorithm</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck5" value="Gaussian Naive Bayesian" name="5"><label for="customCheck5">Gaussian Naive Bayesian</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck6" value="Multinomial Naive Bayesian" name="6"><label for="customCheck6">Multinomial Naive Bayesian</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck7" value="Bernoulli Naive Bayesian" name="7"><label for="customCheck7">Bernoulli Naive Bayesian</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck8" value="Bayesian network" name="8"><label for="customCheck8">Bayesian network</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck9" value="Gaussian Mixture Model(EM Algo)" name="9"><label for="customCheck9">Gaussian Mixture Model(EM Algo)</label></li>
+            <li><input type="checkbox" class="custom-control-input" id="customCheck10" value="K-Means Algorithm" name="10"><label for="customCheck10">K-Means Algorithm</label></li>
+        </ol>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary col-sm-6">Show Results</button>
+    </form>
 </div>
 
   {% endif %}
@@ -111,12 +81,12 @@
       <div class="mul-out" id="result">
       {%  for dict1,title in zip(result.values(),do_algov.values()) %}
       <div class="child-out">
-      <h4>{{ title }}</h4>
+      <h5>{{ title }}</h5>
           {% for i,j in dict1.items()%}
               {% if i=='path' %}
               <img src="../{{ j }}">
               {% else %}
-            <strong>{{ i }}</strong><br>
+            <p>{{ i }}</p><br>
             <p>{{ j | safe}}</p>
               {% endif %}
           {% endfor %}
