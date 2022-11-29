@@ -32,3 +32,4 @@ torch==1.13.0
 tqdm==4.64.1
 typing_extensions==4.4.0
 Werkzeug==2.2.2
+flask_cors
