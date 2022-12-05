@@ -5,10 +5,15 @@ import Checkbox from '@mui/material/Checkbox';
 import { TextField } from '@mui/material';
 import React,{useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-const Algoselect=()=> {
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+import axios from 'axios';
+
+const Algoselect=(props)=> {
+  const filename = props.name
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const [selectedOptions, setSelectedOptions] = useState([]);
+const [options, setOptions] = useState([])
+const [array, setArray] = useState([]);
     const algorithm = [
         { title: 'FIND-S algorithm', algo_no: 1},
         { title: 'Candidate-Elimination algorithm', algo_no:2 },
@@ -23,11 +28,25 @@ const [selectedOptions, setSelectedOptions] = useState([]);
         ];
         
       const handleChange = (event, value) => {
-        console.log(value)
-      setSelectedOptions(value[0]);
+        const valu={...selectedOptions,value}
+        setSelectedOptions(valu);
+
       }
       const handleSubmit = () => {
-        console.log(selectedOptions[0][0]);
+        const value = selectedOptions.value
+        console.log(value)
+        const algo_no = value.map((item) => item.algo_no)
+        setArray(algo_no)
+        function removeDuplicates(arr) {
+                  return [...new Set(arr)];
+        }
+        const do_algo=removeDuplicates(array)
+        axios.get(`http://127.0.0.1:5000/GetResultAsJson?filename=${filename}&do_algo=[1,2,3]`)
+        .then((res)=>{
+              console.log(res.data)
+        })
+        .catch((err)=>{
+            console.log(err.message)})
       }
         
     return (<div>
@@ -51,13 +70,25 @@ const [selectedOptions, setSelectedOptions] = useState([]);
           </li>
         )}
         renderInput={(params) => (
-          <TextField {...params} label="choose algorithms" placeholder="enter your algorithm" />
+          <TextField {...params} label="choose algorithms" placeholder="Enter your algorithm" />
         )}
       
      />
      <br/>
-     <hr/>
     <button className='btn btn-primary' onClick={handleSubmit}>Submit!</button>
+    <div>
+      {options.slice().map((e, index) => {
+        return (
+        <div key={index}>
+      <p>{e.algo_no} {e.title} </p>
+      
+          
+      </div>) 
+      })}
+    </div>
+      {array.map((e)=>{
+        return <h1>{e}</h1>
+      })}
      </div>
      
     );

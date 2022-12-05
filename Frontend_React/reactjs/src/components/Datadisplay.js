@@ -45,13 +45,13 @@ const Datadisplay=()=>{
                   </div>
            </ReactFileReader>
        <br/>
-       <div style={{textAlign: "center"}}> <button  className="btn btn-primary" onClick={handleshow}>Hide dataset</button>
+       <div style={{textAlign: "center"}}> <button  className="btn btn-primary" onClick={handleshow}>Hide Dataset</button>
        <br/>
-      
+      <br/>
         <Algoselect/>
        
        {show && <CsvToHtmlTable data={csv} csvDelimiter="," tableClassName="table  table-striped table-hover"/> }
-         <Chooseoption name={filename}/>
+         <Algoselect name ={filename}/>
     </div>
     </div>
  
@@ -59,36 +59,5 @@ const Datadisplay=()=>{
    }
 
 
-//   const handleFiles = files => {  
-//     setfile(file[0])
-//     var reader = new FileReader();
-//     reader.onload = function(e) {
-//     // Use reader.result
-//       setcsv(reader.result)
-//     }
-//   reader.readAsText(files[0]);
-//   }
-
-//     return <div className="container">
-//           <div style={{
-//         display: 'flex',
-//         flexDirection: 'column',
-//         alignItems: 'center',
-//         height: '50%',
-//         backgroundColor: '#fafafa',
-//         margin: '20px',
-//       }}>
-//         <h1 className='text'>Welcome to ML lab expreiments</h1>
-//         <ReactFileReader handleFiles={handleFiles} fileTypes={".csv"}>
-//             <button className='btn btn-info'>Upload</button>
-//         </ReactFileReader>
-//           <CsvToHtmlTable
-//                data={csv}
-//                csvDelimiter=","
-//                tableClassName="table thead-dark thead-light table-hover"
-//                style={{ margin: '20px'}}/>
-//                </div>
-//     </div>
-// }
 
 export default Datadisplay;
