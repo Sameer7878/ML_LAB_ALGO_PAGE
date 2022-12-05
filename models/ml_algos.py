@@ -237,7 +237,7 @@ class ML_ALGOS:
         dataset=dataset.replace('?', np.nan)
         #res['Sample instances from the dataset are given below']=dataset.head()
 
-        res['Attributes and datatypes']=dataset.dtypes.tolist()
+        #res['Attributes and datatypes']=dataset.dtypes.tolist()
         train_li=[(x,self.data.columns.values [-1]) for x in self.data.columns.values [:-1] ]
         model=BayesianNetwork(train_li)
         res['Learning CPD using Maximum likelihood estimators']=''
@@ -277,7 +277,7 @@ class ML_ALGOS:
         y_gmm=gmm.predict(xs)
         # y_cluster_gmm
 
-        res['The accuracy score of EM: ']=metrics.accuracy_score(y, y_gmm)
+        res['Accuracy of the classifier is']=metrics.accuracy_score(y, y_gmm)
         res['The Confusion matrix of EM: ']=metrics.confusion_matrix(y, y_gmm).tolist()
         return res
     def K_Means(self):
@@ -313,7 +313,7 @@ class ML_ALGOS:
         plt.xlabel('Petal Length')
         plt.ylabel('Petal Width')
         plt.show()"""
-        res['The accuracy score of K-Mean: ']= metrics.accuracy_score(y, model.labels_)
+        res['Accuracy of the classifier is']= metrics.accuracy_score(y, model.labels_)
         res['The Confusion matrixof K-Mean: ']= metrics.confusion_matrix(y, model.labels_).tolist()
         return res
 

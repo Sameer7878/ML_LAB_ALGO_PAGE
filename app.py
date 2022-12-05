@@ -1,12 +1,10 @@
 import ast
-import json
+import os
 
 from flask import *
-import os
-import pandas as pd
-from models.ml_algos import ML_ALGOS
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
+
+from models.ml_algos import ML_ALGOS
 
 app=Flask(__name__)
 app.jinja_env.globals.update(zip=zip)
@@ -59,8 +57,12 @@ def getoutput(do_list,filename):
             continue
         else:
             pass
-
-    return result_list
+    c=[0,0]
+    for i,j in result_list.items():
+        if 'Accuracy of the classifier is' in j:
+            if j['Accuracy of the classifier is']>=c[1]:
+                c[0],c[1]= i,j['Accuracy of the classifier is']
+    return result_list,c[0]
 
 
 @app.route('/')
@@ -86,9 +88,9 @@ def getresult():
         for i in range(1,11):
             if request.form.get(str(i)):
                 do_algo[i]=request.form[str(i)]
-        result=getoutput(do_algo,filename)
+        result,best_algo=getoutput(do_algo,filename)
         print(result)
-        return render_template('index.html',tables=data,filename=filename,result=result,do_algov=do_algo)
+        return render_template('index.html',tables=data,filename=filename,result=result,do_algov=do_algo,best_algo=best_algo)
     else:
         return abort(500)
 '''#@app.route('/getcsvFile/',methods=['POST'])
@@ -118,7 +120,7 @@ def GetResultAsJson():
     filename=request.args.get('filename')
     do_list=ast.literal_eval(request.args.get('do_algo'))
     load_csv('static/datasets/test_docs/{0}'.format(filename))
-    result_list=getoutput(do_list,filename)
+    result_list,done_algo=getoutput(do_list,filename)
     print(result_list)
     return result_list
 

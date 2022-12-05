@@ -1,7 +1,5 @@
-import Datadisplay from "./Datadisplay";
+import Datadisplay from "./components/Datadisplay";
 import React from "react";
-// import Form from "./form";
-// import Main from "./Main";
 const App =()=>{
   return <div><Datadisplay/></div>
 }
