@@ -6,7 +6,7 @@ import { TextField } from '@mui/material';
 import React,{useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
-
+import Getjsonresponse from './Getjsonresponse';
 const Algoselect=(props)=> {
   const filename = props.name
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -41,7 +41,7 @@ const [array, setArray] = useState([]);
                   return [...new Set(arr)];
         }
         const do_algo=removeDuplicates(array)
-        axios.get(`http://127.0.0.1:5000/GetResultAsJson?filename=${filename}&do_algo=[1,2,3]`)
+        axios.get(`http://127.0.0.1:5000/GetResultAsJson?filename=${filename}&do_algo=${array}`)
         .then((res)=>{
               console.log(res.data)
         })
@@ -86,9 +86,7 @@ const [array, setArray] = useState([]);
       </div>) 
       })}
     </div>
-      {array.map((e)=>{
-        return <h1>{e}</h1>
-      })}
+      <Getjsonresponse name={filename} array={array}/>
      </div>
      
     );

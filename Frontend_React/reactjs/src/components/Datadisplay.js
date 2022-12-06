@@ -47,8 +47,6 @@ const Datadisplay=()=>{
        <br/>
        <div style={{textAlign: "center"}}> <button  className="btn btn-primary" onClick={handleshow}>Hide Dataset</button>
        <br/>
-      <br/>
-        <Algoselect/>
        
        {show && <CsvToHtmlTable data={csv} csvDelimiter="," tableClassName="table  table-striped table-hover"/> }
          <Algoselect name ={filename}/>
